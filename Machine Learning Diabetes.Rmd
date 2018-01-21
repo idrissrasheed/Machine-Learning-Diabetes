@@ -2,7 +2,7 @@
 title: "Performing Machine Learning Algorithms to Diagnose Diabetes in Pima Native American Women"
 author: "Idris Rasheed"
 date: "August 12, 2017"
-output: word_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -10,13 +10,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 #1. Abstract
-The intent of the paper is to find an accurate machine learning algorithm to accurately diagnose diabetes in Pima Native American to better understand how machine learning could be used to diagnosis other diseases or correctly classify medical data. Three machine learning algorithms were implemented and tested for accuracy: Linear Support Vector Machine (LSVM), Radial Support Vector Machine (RSVM), and Random Forest and conclude these models are viable options for accurately classifying medical data.
+This paper intends to find a machine learning algorithm to accurately diagnose diabetes in Pima Native American women to better understand how machine learning can be used to diagnosis other diseases or correctly classify medical data. Three machine learning algorithms were implemented and tested for accuracy: Linear Support Vector Machine (LSVM), Radial Support Vector Machine (RSVM), and Random Forest. We conclude these models are viable options for accurately classifying medical data.
 
 #2. Introduction 
-This analytical paper discusses machine learning algorithms as tools to address the diabetic problem within the Pima Native American female population. It is reported that the Pima Native American women of Arizona have the highest reported prevalence of diabetes of any population in the world, exclusively type 2 diabetes.^[1]^ We want to know how different machine learning algorithms are useful tools in the medical community and become assets for bioinformaticians, clinicians, epidemiologists, and other professionals in the medical field. In order to do this, we construct LSVM, RSVM, and Random Forest models to better understand diabetes in the Pima Native American and possibly apply these tools to other field of medicine. In conclusion, our accuracy tests indicate Random Forest, LSVM, and RSVM are useful computational methods in the medical field with some tuning to each model.
+This analytical paper discusses machine learning algorithms as tools to address the diabetic problem within the Pima Native American female population. Reports not that the Pima Native American women of Arizona have the highest reported prevalence of diabetes of any population in the world, exclusively type 2 diabetes. ^[1]^ We want to know how different machine learning algorithms are useful tools to the medical community such as bioinformaticians, clinicians, epidemiologists, and other professionals in the medical field. To do this, we construct LSVM, RSVM, and Random Forest models to better understand diabetes in the Pima Native American and possibly apply these tools to other fields of medicine. In conclusion, our accuracy tests indicate LSVM, RSVM, and Random Forest models, with some tuning, are useful computational methods in the medical field.
 
 #2.1 Description of the Dataset
-The dataset being analyzed is the "Pima Indian Women Diabetes" from the University of California, Irvine (UCI) data repository.^[2]^ It contains 768 observations and 652 missing values for nine features that take integer and real values, which is ideal for this classification modeling project. These are the features within the dataset:
+The dataset analyzed is the "Pima Indian Women Diabetes" from the University of California, Irvine (UCI) data repository. ^[2]^ It contains 768 observations and 652 missing values for nine features that take integer and real values, which is ideal for this classification modeling project. These are the features within the dataset:
 
 Feature Name | Amended Feature Name        | Feature Type
 -----------------------+-----------------------------+----------------------:  
@@ -31,7 +31,7 @@ Age (years) |	Age | Predictor
 Diabetic or Non-Diabetic coded as 0 and 1 |	Diagnosis | Response
 
 #2.2 Software Implementation
-For the purpose of this paper, we will be using the statistical programming language R through the RStudio software to write and process our code. All our statistical analysis will be processed with these RStudio's libraries: corrplot, e1071, RSNNS, randomForest, mice, kernlab, caret, AppliedPredictiveModeling, and VIM, and our report will be manifested with RMarkdown. 
+For this paper, we will be using the statisticalprogramming language R through the RStudio software to write and process our code. All our statistical analysis will be processed with these RStudio's libraries: corrplot, e1071, RSNNS, randomForest, mice, kernlab, caret, AppliedPredictiveModeling, and VIM, and our report will be manifested with RMarkdown.
 
 #3. Data Preprocessing 
 Our initial phase of this paper begins with installing and unpacking our packages with library() and importing our dataset.
@@ -79,7 +79,7 @@ We will the begin the exploratory analysis portion by developing a scatterplot m
 pairs(diabetes)
 ```
 
-Some features have a value of 0 which is biologically impossible for the PlasmaGlucose, DiastolicPressure, FoldThickness, Insulin, and BMI features. This problem needs to be corrected before we can continue. 
+Some features have a value of 0 which is biologically impossible for the PlasmaGlucose,DiastolicPressure, FoldThickness, Insulin, and BMI features. This problem needs to be corrected before we can continue.
 
 ##3.5 Missing Datapoints
 We discovered that the PlasmaGlucose, DiastolicPressure, FoldThickness, Insulin, and BMI features contain values of 0. To remedy this issue, we will assume all 0 values for these features are missing values and be recoded as NAs. This makes it easier to assess our missing values.
@@ -94,21 +94,20 @@ for (i in 2:6){
 }
 ```
 
-##4.3 Missing Values
 ```{r}
 table(is.na(diabetes))
 ```
 The Pima Native American women diabetes dataset contains 652 missing values and we are interested in knowing the proportion of missing values by feature. 
 
 ##3.6 Proportion of Missing Values By Feature
-We use aggr() to visual our missing data by feature to understand our dataset better. 
+We use aggr() to visual our missing data by feature to understand our dataset better.
 ```{r agg}
 aggr(diabetes[,2:6], cex.lab=1, cex.axis = .4, numbers = T, gap = 0)
 ```
 
-This is the aggregation plot where red indicates the missing values and the light blue indicates the complete data. The "Proportion of missings" histogram shows that the Insulin feature has more than 50% values missing and the FoldThickness feature is missing around 33% of its values. Then we have the "Combinations" plot indicating that 51.04% of the data is complete and the other 48.96% of the values is missing from the dataset.
+Above is the aggregation plot where red indicates the missing values and the light blue indicates the complete data. The "Proportion of missings" histogram shows that the Insulin feature has more than 50% values missing and the FoldThickness feature is missing around 33% of its values. Then we have the "Combinations" plot indicating that 51.04% of the data is complete and the other 48.96% of the values is missing from the dataset.
 
-In this case, we want to keep all the missing values instead of dropping them through the process of imputation. Before deciding on how to impute the missing values, we want to understand how the missing values are distributed by constructing a scatterplot matrix of the missing values. We do this to identify any discernable relationship that impacts which imputation method to implement.
+In this case, we want to keep all the missing values instead of dropping them through the process of imputation. Before deciding on how to impute the missing values, we want to understand how the missing values are distributed by constructing a scatterplot matrix of the missing values. We do this to identify any discernible relationship that impacts which imputation method to implement.
 
 ##3.7 Distribution of Missing Values
 ```{r scatter missing}
@@ -119,7 +118,9 @@ scattmatrixMiss(diabetes)
 The missing scatterplot matrix indicates there is no relationship between the features and missing values. We can assume that the data is missing at random which means we can perform imputation by Predictive Mean Matching (PMM).
 
 ##3.8 Predictive Mean Matching
-PMM is a semi-parametric imputation method that predicts a value from a model's missing and observed values. Each missing value is replaced by an observed value close to the regression-predicted value or a random selection of observed values, corresponding to a feature.^[3]^ We will now create a temporary, imputed diabetes dataset with the mice(), where the parameter "m" is the number of multiple imputations. We want to impute this data three times to represent the number of classification methods to be constructed.  
+PMM is a semi-parametric imputation method that predicts a value from a model's missing and observed values. Each missing value is replaced by an observed value close to the regression-predicted value or a random selection of observed values, corresponding to a feature. ^[3]^ We will now create a temporary, imputed diabetes dataset with the mice(), where the parameter "m" is the number of multiple imputations. We want to impute this data three times to represent the number of classification methods to be constructed.
+
+Then we plot the density of the imputed diabetes dataset against the original diabetes dataset to see if they are approximately equal.
 ```{r com, include=FALSE}
 com.diabetes <- mice(diabetes, m = 3, method = 'pmm', seed = 125)
 ```
@@ -130,22 +131,21 @@ Then we plot the density of the imputed diabetes dataset against the original di
 densityplot(com.diabetes)
 ```
 
-The red distributions are the imputed diabetes data and the blue is the original diabetes data. The density plots show both the imputed and original distributions are approximately equal to each, so we can now replace our original dataset with the imputed data through the complete().    
-
+The red distributions are the imputed diabetes data, and the blue is the original diabetes data. The density plots show both the imputed and original distributions are approximately equal to each, so we can now replace our original dataset with the imputed data through the complete().   
 ```{r form}
 diabetes <- complete(com.diabetes)
 ```
 We now proceed with the feature selection process. 
 
 ##3.9 Feature Selection
-In the feature selection process, we need to ensure no more than one feature has a correlation greater than .7 by visualizing a correlogram. 
+In the feature selection process, we need to ensure no more than one feature has a correlation greater than .7 by visualizing a correlogram
 
 ##3.10 Correlogram
 ```{r corr}
 corrplot(cor(diabetes[,-9]),type = "lower", method = "number")
 ```
 
-The examination of the correlogram shows that none of the features have a correlation coefficient of .7 or higher, so we include every feature. 
+The examination of the correlogram shows that none of the features have a correlation coefficient of .7 or higher, so we include every feature.
 
 #3.11 Normalizing Data
 All our features are different units so we need to normalize them before setting up our machine algorithms. We normalize our data by making each feature have a mean of 0 and a standard deviation of 1, with the scale() in R. Now we can proceed with setting up our algorithms.
@@ -154,7 +154,7 @@ diabetes[, 1:8] <- scale(diabetes[, 1:8], center = TRUE, scale = TRUE)
 ```
 
 #4. Setting Up the Algorithms
-We can commence with constructing our three models from a training set of observations through 10-fold cross validation with the trainControl(). 10-fold cross-validation splits up the dataset in nine training sets and one test set, so the original dataset has equal chance appearing in both sets and prevents overfitting.^[4]^  
+We can commence with constructing our three models from a training set of observations through 10-fold cross-validation with the trainControl(). 10-fold cross-validation splits up the dataset into nine training sets and one test set, so the original dataset has an equal chance of appearing in both sets, thereby preventing overfitting. ^[4]^
 
 ##4.1 Cross-Validation
 ```{r folds}
@@ -166,15 +166,15 @@ Folds <- trainControl(method = "repeatedcv",
 ```
 
 ##4.2 Training and Test Set
-The training set contains the set of examples fitted to the parameters of our classification methods and the test set contains the set of examples to assess the accuracy of our classification methods.^[5]^ 
-
+The training set contains the set of examples fitted to the parameters of our classification methods, and the test set contains the set of examples to assess the accuracy of our classification methods. ^[5]^
 ```{r probability}
 prop.table(table(diabetes$Diagnosis))
 ```
 
-Because approximately 65% of the Pima Native American women do not have diabetes and around 35% do have diabetes, we choose to separate the diabetes dataset into 70% training set and 30% test set.  
+Because approximately 65% of the Pima Native American women do not have diabetes and around 35% do have diabetes, we choose to separate the diabetes dataset into 70% training set and 30% test set.
 
-65% also becomes the passing threshold for the future models' accuracy tests in the future portion of our project. 
+65% also becomes the passing threshold for the future models' accuracy tests in the future portion of our project.
+
 ```{r training-test}
 sampleSize <- floor(.7 * nrow(diabetes))
 set.seed(125)
@@ -190,7 +190,7 @@ YTest <- diabetes[-Ind, 9]
 Now that we have our training and test sets, we can proceed to construct our classification models.
 
 #6. Random Forest 
-Random Forest is a tree-based classifier comprising of a collection of independent identically distributed random vectors and trees. Each tree votes for the most popular class, in our case, either NotDiabetic or Diabetic and the forest chooses the classification with the most votes.^[6]^
+Random Forest is a tree-based classifier comprising of a collection of independent identically distributed random vectors and trees. Each tree votes for the most popular class, in our case, either NotDiabetic or Diabetic and the forest chooses the classification with the most votes. ^[6]^
 
 Our Random Forest model is created by using expand.grid() and train(). The mtry argument of expand.grid() is the number of predictor features available for splitting at each tree node. We choose two as the minimum and eight as the max to prevent overfitting. The train() runs through the training and test sets to build the tree, implements 10-fold cross-validation, and uses the ROC as the method to optimize the Random Forest model.
 ```{r randomforest}
@@ -204,27 +204,26 @@ diabetes.rf <- train(XTrain,
                       tuneGrid = rf.expand)
 diabetes.rf
 ```
+From this output, we can see the ROC is maximized when mtry = 2 and understand that Random Forest is optimal when two variables are split at each node.
 
-From this output we can see the ROC is maximized when mtry = 2 and understand that Random Forest is optimal when two variables are split at each node. 
-
-Next we will visualize the Random Forest model by plotting its variable of importance. 
+Next, we will visualize the Random Forest model by plotting its variable of importance.
 
 ##Variable of Importance
-The variable of importance identifies the predictor with the most impact on classifying our class label, with the most impactful at the top and the least impactful at the bottom by the mean decrease in Gini coefficient. The mean decrease in Gini coefficient "measures how each variable contributes to the homogeneity of the nodes and leaves in the resulting random forest".^[7]^
+The variable of importance identifies the predictor with the most impact on classifying our class label, with the most impactful at the top and the least impactful at the bottom by the mean decrease in Gini coefficient. The mean decrease in Gini coefficient "measures how each variable contributes to the homogeneity of the nodes and leaves in the resulting random forest." ^[7]^
 ```{r rf varimpplot}
 varImpPlot(diabetes.rf$finalModel, main = "Diabetes Random Forest")
 ```
 
-We can see our PlasmaGlucose predictor has the highest mean decrease in Gini coefficient and DiastolicPressure has the lowest mean decrease in Gini coefficient. Also, all predictors appear to be significant to classifying the Diagnosis response feature for our Random Forest model. 
+We can see our PlasmaGlucose predictor has the highest mean decrease in Gini coefficient and DiastolicPressure has the lowest mean decrease in Gini coefficient. Also, all predictors appear to be significant in classifying the Diagnosis response feature for our Random Forest model.
 
 We will proceed from here to the SVM classification.
 
 #7. Support Vector Machine
-A SVM is a supervised learning classifier that projects a binary class label on a hyperplane and separates the two classes of points by optimizing the margin. The data points on either side of the hyperplane are called support vectors and function as determining the margins between the class labels.^[8]^ SVMs also have the parameters that impact its algorithm: C and gamma. 
+A SVM is a supervised learning classifier that projects a binary class label on a hyperplane and separates the two classes of points by optimizing the margin. The data points on either side of the hyperplane are called support vectors and function as determining the margins between the class labels. ^[8]^ SVMs also have the parameters that impact its algorithm: C and gamma.
 
-C is the trade-off between the classification of training examples and the margins and gamma is how far the influence of a single training example reaches. A small C maximizes the margin at the cost of accurately classifying training examples and a large C ensures accurate classification of the training examples at the cost of maximizing the margin. A small gamma indicates each training example has a far reach from the margins and a large gamma indicates each training example has a close reach from the margins.^[9]^ It is important to note that the LSVM only has the C parameter and the RSVM has both the C and gamma parameters.
+C is the trade-off between the classification of training examples and the margins and gamma is how far the influence of a single training example reaches. A small C maximizes the margin at the cost of accurately classifying training examples, and a large C ensures accurate classification of the training examples at the cost of maximizing the margin. A small gamma indicates each training example has a far reach from the margins and a large gamma indicates each training example has a close reach from the margins. ^[9]^ It is important to note that the LSVM only has the C parameter and the RSVM has both the C and gamma parameters.
 
-For the context of this paper, we use the linear kernel and the radial basis function (RBF) kernel, a non-linear kernel, to project our data from the input space into a higher dimensional feature space because our dataset is not linearly separeable.
+For the context of this paper, we use the linear kernel and the radial basis function (RBF) kernel, a non-linear kernel, to project our data from the input space into a higher dimensional feature space because our dataset is not linearly separable.
 
 #7.1 Linear Support Vector Machine 
 We tune our LSVM by having the expand.grid() take on different cost values and then choose the C with the highest ROC. Then we use train() to run through the training and test sets to build the LSVM, implement 10-fold cross-validation, and use method = "svmLinear" for the linear kernel.
@@ -241,19 +240,18 @@ lsvm <- train(XTrain,
               tuneGrid = linear.tune)
 lsvm
 ```
-
 The optimal ROC gives us C = 5. We will now visualize this model to understand its margin and support vectors. 
 
 ##7.2 Linear Support Vector Machine Plot
-With the information from the variable of importance, we will plot LSVM of the PlasmaGluccose predictor against the DiastolicPressure to visualize LSVM's fit with the ksvm() and plot(). The "vanilladot" argument of the ksvm() makes the model be fitted as a LSVM and "C-svc" makes it a C-classification.
+With the information from the variable of importance, we will plot LSVM of the PlasmaGluccose predictor against the DiastolicPressure to visualize LSVM's fit with the ksvm() and plot(). The "vanilladot" argument of the ksvm() makes the model be fitted as a LSVM, and "C-svc" makes it a C-classification. 
 ```{r plot LSVM fit}
 lsvm.fit = ksvm(Diagnosis~DiastolicPressure+PlasmaGlucose, data = diabetes,type = 'C-svc', kernel = 'vanilladot')
 plot(lsvm.fit, data=diabetes)
 ```
 
-The black filled shapes represent the support vectors, the triangles correspond to the training examples classified by DiastolicPressure, the circles correspond to the training examples classified by PlasmaGlucose, the red region indicates the Diabetic class label and the blue region represents the NotDiabetic class label. 
+The black filled shapes represent the support vectors. The triangles correspond to the training examples classified by DiastolicPressure. The circles correspond to the training examples classified by PlasmaGlucose. The red region indicates the Diabetic class label. The blue region represents the NotDiabetic class label.
 
-The support vectors are heavily packed together and form a hyperplane that maximizes the margin for the NotDiabetic class label; minimizes the margin for the Diabetic class label. From looking at the shapes and colors, the training examples classified by the PlasmaGlucose tend to be NotDiabetic and the DiastolicPressure training examples lie closer within the Diabetic class.It is also important to note that DiastolicPressure seems to have less training examples than PlasmaGlucose. 
+The support vectors form a hyperplane that maximizes the margin for the NotDiabetic class label and minimizes the margin for the Diabetic class label. From looking at the shapes and colors, the training examples classified by the PlasmaGlucose tend to be NotDiabetic and the DiastolicPressure training examples lie closer within the Diabetic class. It is also important to note that DiastolicPressure seems to have less training examples than PlasmaGlucose.
 
 From here, we follow a similar process for the RSVM model.
 
@@ -275,18 +273,18 @@ rsvm
 The optimal ROC gives us gamma = 5 and C = 0.8. We will now visualize this model to understand its margin and support vectors. 
 
 ##7.4 Radial Support Vector Machine Plot
-Once again, we are using the information from the variable of importance to plot the RSVM. This time the ksvm() takes the argument "rbfdot" to represent the RBF kernel. 
+Once again, we are using the information from the variable of importance to plot the RSVM. This time the ksvm() takes the argument "rbfdot" to represent the RBF kernel.
 ```{r radial plot TP}
 rsvm.fit = ksvm(Diagnosis~DiastolicPressure+PlasmaGlucose, data = diabetes,type = 'C-svc', kernel = 'rbfdot')
 plot(rsvm.fit, data=diabetes)
 ```
 
-Similarly to the LSVM plot, DiastolicPressure has less training examples than PlasmaGlucose and most of PlasmaGlucose's training examples appear to be classified as NotDiabetic. Also its hyperplane maximizes the PlasmaGlucose training examples a lot more than the LSVM, which could negatively impact its classification accuracy. In respect to the support vectors, they appear more spread out and forms a hyperplane that segments the class labels into separate groups.  
+Similarly, to the LSVM plot, DiastolicPressure has less training examples than PlasmaGlucose and most of PlasmaGlucose's training examples appear to be classified as NotDiabetic. Also, its hyperplane maximizes the PlasmaGlucose training examples many more than the LSVM, which could negatively impact its classification accuracy. With respect to the support vectors, they appear more spread out and forms a hyperplane that segments the class labels into separate groups.
 
-Knowing this about each of our three classification machine learning algorithms, we can carry out with testing their accuracy. 
+Knowing this about each of our three classification machine learning algorithms, we can carry out with testing their accuracy.
 
 #8. Testing Model Accuracy 
-We have reached the point in our paper where will can test the accuracy of our models by using our test set to see if the model surpasses the 65% accuracy threshold. We determine the accuracy by forming a confusion matrix, a contigency table that explains the performance of an algorithm's through its predicted and actual values.^[10]^ The confusion matrix for each model can easily be constructed with the confusionMatrix(). 
+We have reached the point in our paper where will can test the accuracy of our models by using our test set to see if the model surpasses the 65% accuracy threshold. We determine the accuracy by forming a confusion matrix, a contingency table that explains the performance of an algorithm's through its predicted and actual values. ^[10]^ The confusion matrix for each model can easily be constructed with the confusionMatrix().
 
 ##8.1 Random Forest Accuracy
 ```{r rf acc}
@@ -306,7 +304,7 @@ confusionMatrix(rsvm)
 All three models pass the 65% accuracy threshold and LSVM has the highest accuracy, making it the best model to classify diabetes in Pima Native American Women.
 
 #9. Conclusion 
-Random Forest, LSVM, AND RSVM passed the 65% accuracy threshold and proved that these are useful algorithms in understanding medical and biological data. These model could improve their accuracy and be more powerful through better tuning and a dataset with less missing values. Nonetheless, these models are important tools to diagnose diabetes in communities, other diseases, and even classify genetic mutations to positively impact medical research. This paper function as proof that machine learning is a valuable asset and has a wide range of applications in the medical field. 
+Random Forest, LSVM, AND RSVM passed the 65% accuracy threshold and proved that these are useful algorithms in understanding medical and biological data. These models could improve their accuracy and be more powerful through better tuning and a dataset with less missing values. Nevertheless, these models are important tools to diagnose diabetes in communities, to diagnose other diseases, and even classify genetic mutations to impact medical research. This paper functions as proof that machine learning is valuable and has a wide range of applications in the medical field.
 
 #10. References
 1.  Narayan, Venkat. "Diabetes Mellitus in Native Americans: The Problem and Its Implications." Changing Numbers, Changing Needs: American Indian Demography and Public Health., U.S. National Library of Medicine, 1 Jan. 1996, www.ncbi.nlm.nih.gov/books/NBK233089/.
